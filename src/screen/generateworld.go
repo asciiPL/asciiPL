@@ -1,20 +1,50 @@
 package screen
 
-import "github.com/rivo/tview"
+import (
+	"github.com/gdamore/tcell/v2"
+	"github.com/rivo/tview"
+)
 
 func NewGenerateWorldScreen(appScreen *AppScreen) *Page {
 
 	log := tview.NewList().
 		ShowSecondaryText(false).
-		AddItem("Generate new world", "", 'g', func() {}).
-		AddItem("Back", "", 'b', func() { appScreen.Back() })
+		AddItem("_GEN WORLD_ Process generate map", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Complete generate map", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Process generate people", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Complete generate 32 people", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Process generate event", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Complete generate 1963 people", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Start with year 0", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Process event, current year 200", "", 0, func() {}).
+		AddItem("_GEN WORLD_ Complete generate world, ready to play", "", 0, func() {})
+
 	log.SetTitle("Log").SetBorder(true)
 
 	option := tview.NewList().
 		ShowSecondaryText(false).
-		AddItem("Generate new world", "", 'g', func() {}).
+		AddItem("Play this world", "", 'p', func() {}).
+		AddItem("Save world and back", "", 's', func() { appScreen.Back() }).
 		AddItem("Back", "", 'b', func() { appScreen.Back() })
 	option.SetTitle("Option").SetBorder(true)
+
+	selections := []*tview.List{option, log}
+
+	for i, box := range selections {
+		(func(index int) {
+			box.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+				switch event.Key() {
+				case tcell.KeyTab:
+					appScreen.app.SetFocus(selections[(index+1)%len(selections)])
+					return nil
+				case tcell.KeyBacktab:
+					appScreen.app.SetFocus(selections[(index+len(selections)-1)%len(selections)])
+					return nil
+				}
+				return event
+			})
+		})(i)
+	}
 
 	grid := tview.NewGrid().
 		SetColumns(0, 0).
