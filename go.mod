@@ -3,6 +3,7 @@ module awesomeProject
 go 1.19
 
 require (
+	github.com/TwiN/go-color v1.4.0
 	github.com/gdamore/tcell/v2 v2.6.0
 	github.com/rivo/tview v0.0.0-20230307144320-cc10b288e304
 )

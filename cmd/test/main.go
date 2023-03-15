@@ -1,10 +1,9 @@
 package main
 
 import (
-	"awesomeProject/src/screen"
+	"awesomeProject/src/map2"
 )
 
 func main() {
-	sc := screen.NewAppScreen()
-	sc.StartScreen(*sc.GenerateScreen)
+	map2.DivArray(60)
 }
