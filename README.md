@@ -10,6 +10,7 @@ If you would like to contribute to this project, please fork the repository and 
 
 ### Tasks
 - [ ] Design and implement a grid map
+- [ ] Setup CI
 - [ ] Collect sample data from movies and novels and model it to a plot configuration
 - [ ] Implement the plot configuration
 - [ ] Write the simulator mechanics and implement them
