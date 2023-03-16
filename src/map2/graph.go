@@ -8,28 +8,6 @@ import (
 	"time"
 )
 
-// house: 1 * 2
-// house:
-
-//type LandGrid *[][]Land
-//
-//type Land struct {
-//	area *Area
-//}
-//
-//type AreaType string
-//
-//const (
-//	AreaTypeUpperCity AreaType = "Upper City"
-//)
-//
-//type Area struct {
-//	Grid[][]
-//	areaType AreaType
-//	neighborhood *Area
-//}
-//
-
 type Area struct {
 	id    int
 	name  string
@@ -201,16 +179,3 @@ func bfs(grid *[][]int, x, y, value int) {
 		}
 	}
 }
-
-//* *
-//
-//* *
-//* *
-//
-//* * * *
-//
-//* * *
-//	*
-//
-//* * *
-// *

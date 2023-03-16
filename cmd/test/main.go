@@ -1,9 +1,11 @@
 package main
 
 import (
-	"awesomeProject/src/map2"
+	"awesomeProject/src/config"
+	"log"
 )
 
 func main() {
-	map2.DivArray(60)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	config.MigrationConfig()
 }
