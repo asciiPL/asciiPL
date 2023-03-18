@@ -1,17 +1,18 @@
 package map2
 
 import (
-	"fmt"
-	"github.com/TwiN/go-color"
 	"math/rand"
 	"sync"
 	"time"
 )
 
 type Area struct {
-	id    int
-	name  string
-	color int
+	Id               int      `json:"id"`
+	Name             string   `json:"name"`
+	Color            int      `json:"color"`
+	Size             string   `json:"size"`
+	ConstructionRate string   `json:"constructionRate"`
+	Building         []string `json:"building"`
 }
 
 type Road struct {
@@ -50,6 +51,11 @@ type Grid struct {
 	road         *Road
 }
 
+func NewGrid(area *Area) *Grid {
+	grid := Grid{area: area}
+	return &grid
+}
+
 func NewConstructionGrid(area *Area, construction *Construction) *Grid {
 	grid := Grid{area: area, construction: construction}
 	construction.grid = &grid
@@ -62,11 +68,11 @@ func NewRoadGrid(area *Area, road *Road) *Grid {
 	return &grid
 }
 
-func DivArray(size int) {
+func Generate(size int, cfg map[int]Area) {
 	rand.Seed(time.Now().UnixNano())
-	arr := make([][]int, size)
+	arr := make([][]*Grid, size)
 	for i := range arr {
-		arr[i] = make([]int, size)
+		arr[i] = make([]*Grid, size)
 	}
 
 	var wg sync.WaitGroup
@@ -78,52 +84,18 @@ func DivArray(size int) {
 			j := j
 			x := rand.Intn(size/3) + size/3*i
 			y := rand.Intn(size/3) + size/3*j
-			arr[x][y] = 3*i + j + 1
+			area := cfg[3*i+j+1]
+			arr[x][y] = NewGrid(&area)
 			go func() {
 				defer wg.Done()
-				bfs(&arr, x, y, 3*i+j+1)
+				bfs(&arr, x, y, &area)
 			}()
 		}
 	}
 
 	wg.Wait()
 
-	for i := 0; i < size; i++ {
-		for j := 0; j < size; j++ {
-			if arr[i][j] == 0 {
-				print(color.White, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 1 {
-				print(color.Red, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 2 {
-				print(color.Green, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 3 {
-				print(color.Yellow, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 4 {
-				print(color.Blue, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 5 {
-				print(color.Purple, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 6 {
-				print(color.Cyan, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 7 {
-				print(color.Gray, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 8 {
-				print(color.Red, arr[i][j], " ", color.Reset)
-			}
-			if arr[i][j] == 9 {
-				print(color.Green, arr[i][j], " ", color.Reset)
-			}
-			print(" ")
-		}
-		fmt.Println()
-	}
+	PrintMap(arr)
 }
 
 type cor struct {
@@ -131,7 +103,7 @@ type cor struct {
 	y int
 }
 
-func bfs(grid *[][]int, x, y, value int) {
+func bfs(grid *[][]*Grid, x int, y int, area *Area) {
 	g := *grid
 	m := len(g)
 	n := len(g[0])
@@ -142,17 +114,15 @@ func bfs(grid *[][]int, x, y, value int) {
 	}
 
 	queue := make([]cor, 0)
-	if g[x][y] == value {
-		queue = append(queue, cor{x, y})
-	}
+	queue = append(queue, cor{x, y})
 
 	for len(queue) != 0 {
 		size := len(queue)
 		for i := 0; i < size; i++ {
 			curNode := queue[0]
 			queue = queue[1:]
-			if g[curNode.x][curNode.y] == 0 || (x == curNode.x && y == curNode.y) {
-				g[curNode.x][curNode.y] = value
+			if g[curNode.x][curNode.y] == nil || (x == curNode.x && y == curNode.y) {
+				g[curNode.x][curNode.y] = NewGrid(area)
 				numVi++
 				if numVi*9 > m*n {
 					time.Sleep(1 * time.Nanosecond)
@@ -160,19 +130,20 @@ func bfs(grid *[][]int, x, y, value int) {
 			} else {
 				continue
 			}
-			if curNode.x > 0 && !vi[curNode.x-1][curNode.y] && g[curNode.x-1][curNode.y] == 0 {
+			if curNode.x > 0 && !vi[curNode.x-1][curNode.y] &&
+				g[curNode.x-1][curNode.y] == nil {
 				vi[curNode.x-1][curNode.y] = true
 				queue = append(queue, cor{curNode.x - 1, curNode.y})
 			}
-			if curNode.y > 0 && !vi[curNode.x][curNode.y-1] && g[curNode.x][curNode.y-1] == 0 {
+			if curNode.y > 0 && !vi[curNode.x][curNode.y-1] && g[curNode.x][curNode.y-1] == nil {
 				vi[curNode.x][curNode.y-1] = true
 				queue = append(queue, cor{curNode.x, curNode.y - 1})
 			}
-			if curNode.x < m-1 && !vi[curNode.x+1][curNode.y] && g[curNode.x+1][curNode.y] == 0 {
+			if curNode.x < m-1 && !vi[curNode.x+1][curNode.y] && g[curNode.x+1][curNode.y] == nil {
 				vi[curNode.x+1][curNode.y] = true
 				queue = append(queue, cor{curNode.x + 1, curNode.y})
 			}
-			if curNode.y < n-1 && !vi[curNode.x][curNode.y+1] && g[curNode.x][curNode.y+1] == 0 {
+			if curNode.y < n-1 && !vi[curNode.x][curNode.y+1] && g[curNode.x][curNode.y+1] == nil {
 				vi[curNode.x][curNode.y+1] = true
 				queue = append(queue, cor{curNode.x, curNode.y + 1})
 			}
