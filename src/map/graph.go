@@ -2,7 +2,6 @@ package _map
 
 import (
 	"awesomeProject/src/util"
-	"fmt"
 	"math/rand"
 	"sync"
 	"time"
@@ -51,10 +50,12 @@ type Grid struct {
 	area         *Area
 	construction *Construction
 	road         *Road
+	x            int
+	y            int
 }
 
-func NewGrid(area *Area) *Grid {
-	grid := Grid{area: area}
+func NewGrid(area *Area, x int, y int) *Grid {
+	grid := Grid{area: area, x: x, y: y}
 	return &grid
 }
 
@@ -87,7 +88,7 @@ func Generate(size int, cfg map[int]Area) {
 			x := rand.Intn(size/3) + size/3*i
 			y := rand.Intn(size/3) + size/3*j
 			area := cfg[3*i+j+1]
-			arr[x][y] = NewGrid(&area)
+			arr[x][y] = NewGrid(&area, x, y)
 			go func() {
 				defer wg.Done()
 				bfs(&arr, x, y, &area)
@@ -119,8 +120,11 @@ func Generate(size int, cfg map[int]Area) {
 
 			// Choose one of the directions
 			structure := buildCfg.structure[rand.Intn(len(buildCfg.structure))]
-			// Check condition
-			fmt.Println(structure)
+			// Check condition from random grid
+			grid := grids[rand.Intn(len(grids))]
+			if !checkAndBuilding(grid, structure, &arr, buildCfg.size) {
+				continue
+			}
 			// If pass: remove grid, use+= sizeBuilding
 			// If false: continue
 		}
@@ -129,6 +133,26 @@ func Generate(size int, cfg map[int]Area) {
 
 	// Put road
 	PrintMap(arr)
+}
+
+func checkAndBuilding(grid Grid, structure [][]int, arr *[][]*Grid, size int) bool {
+	x, y := grid.x, grid.y
+	n, m := len(structure), len(structure[0])
+	g := *arr
+	xl, yl := len(g), len(g[0])
+	match := 0
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			if structure[i][j] == 1 {
+				if x+i >= xl || y+j >= yl || g[x+i][y+j].construction != nil {
+					return false
+				} else {
+					match++
+				}
+			}
+		}
+	}
+	return match == size
 }
 
 type cor struct {
@@ -155,7 +179,7 @@ func bfs(grid *[][]*Grid, x int, y int, area *Area) {
 			curNode := queue[0]
 			queue = queue[1:]
 			if g[curNode.x][curNode.y] == nil || (x == curNode.x && y == curNode.y) {
-				g[curNode.x][curNode.y] = NewGrid(area)
+				g[curNode.x][curNode.y] = NewGrid(area, curNode.x, curNode.y)
 				numVi++
 				if numVi*9 > m*n {
 					time.Sleep(1 * time.Nanosecond)
