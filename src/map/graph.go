@@ -1,6 +1,8 @@
-package map2
+package _map
 
 import (
+	"awesomeProject/src/util"
+	"fmt"
 	"math/rand"
 	"sync"
 	"time"
@@ -95,6 +97,37 @@ func Generate(size int, cfg map[int]Area) {
 
 	wg.Wait()
 
+	area2Grid := map[*Area][]Grid{}
+
+	for i := 0; i < size; i++ {
+		for j := 0; j < size; j++ {
+			grid := arr[i][j]
+			area2Grid[grid.area] = append(area2Grid[grid.area], *grid)
+		}
+	}
+
+	// Put building
+	for area, grids := range area2Grid {
+		buildCfgs := convertBuilding(area.Building)
+		// Convert a string to a two-dimensional array
+
+		gridSize := len(grids)
+		for use := 0.0; use <= float64(gridSize)*util.DivideString(area.ConstructionRate); {
+			randomIndex := rand.Intn(len(buildCfgs))
+
+			buildCfg := buildCfgs[randomIndex]
+
+			// Choose one of the directions
+			structure := buildCfg.structure[rand.Intn(len(buildCfg.structure))]
+			// Check condition
+			fmt.Println(structure)
+			// If pass: remove grid, use+= sizeBuilding
+			// If false: continue
+		}
+
+	}
+
+	// Put road
 	PrintMap(arr)
 }
 

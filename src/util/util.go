@@ -4,6 +4,7 @@ import (
 	"os"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -16,6 +17,13 @@ func ReadFile(filepath string) ([]byte, error) {
 	fullPath := path.Join(cwd, filepath)
 
 	return os.ReadFile(fullPath)
+}
+
+func DivideString(input string) float64 {
+	parts := strings.Split(input, "/")
+	numerator, _ := strconv.ParseFloat(parts[0], 64)
+	denominator, _ := strconv.ParseFloat(parts[1], 64)
+	return numerator / denominator
 }
 
 func ListFileConfig(folderPath string) []string {

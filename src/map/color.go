@@ -1,4 +1,4 @@
-package map2
+package _map
 
 import (
 	"fmt"

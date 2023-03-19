@@ -1,7 +1,7 @@
 package config
 
 import (
-	"awesomeProject/src/map2"
+	"awesomeProject/src/map"
 	"awesomeProject/src/util"
 	"encoding/json"
 	"log"
@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	Areas []map2.Area `json:"areas"`
+	Areas []_map.Area `json:"areas"`
 }
 
 type Migration struct {
@@ -17,7 +17,7 @@ type Migration struct {
 	Name    string `json:"name"`
 }
 
-func MigrationConfig() map[int]map2.Area {
+func MigrationConfig() map[int]_map.Area {
 	gridConfigFiles := util.ListFileConfig("config/grid")
 	for _, fileName := range gridConfigFiles {
 		MigrationGridConfig(fileName)
@@ -26,12 +26,12 @@ func MigrationConfig() map[int]map2.Area {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var areaCfg []map2.Area
+	var areaCfg []_map.Area
 	err = json.Unmarshal(areaByte, &areaCfg)
 	if err != nil {
 		log.Fatal(err)
 	}
-	mapCfg := map[int]map2.Area{}
+	mapCfg := map[int]_map.Area{}
 	for _, area := range areaCfg {
 		mapCfg[area.Id] = area
 	}
