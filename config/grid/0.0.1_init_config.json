@@ -40,18 +40,8 @@
     },
     {
       "id": 4,
-      "name": "Hospital",
-      "color": 4,
-      "size": "1/9",
-      "constructionRate": "2/3",
-      "building": [
-        "***\n***"
-      ]
-    },
-    {
-      "id": 5,
       "name": "Forest",
-      "color": 5,
+      "color": 4,
       "size": "1/9",
       "constructionRate": "1/12",
       "building": [
@@ -59,11 +49,21 @@
       ]
     },
     {
+      "id": 5,
+      "name": "Hospital",
+      "color": 5,
+      "size": "1/9",
+      "constructionRate": "2/3",
+      "building": [
+        "***\n***"
+      ]
+    },
+    {
       "id": 6,
       "name": "Docks",
       "color": 6,
       "size": "1/9",
-      "constructionRate": "1/5",
+      "constructionRate": "1/10",
       "building": [
         "******\n******",
         "*****\n    *"
@@ -85,7 +85,7 @@
       "name": "Chapel",
       "color": 8,
       "size": "1/9",
-      "constructionRate": "3/5",
+      "constructionRate": "3/10",
       "building": [
         "*****\n*****\n*****"
       ]
@@ -95,7 +95,7 @@
       "name": "Factory",
       "color": 9,
       "size": "1/9",
-      "constructionRate": "4/5",
+      "constructionRate": "2/5",
       "building": [
         "****\n****\n****\n****",
         "*****\n*****"

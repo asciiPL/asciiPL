@@ -3,17 +3,21 @@ package util
 import (
 	"os"
 	"path"
+	"path/filepath"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
 )
 
-func ReadFile(filepath string) ([]byte, error) {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
+var (
+	_, b, _, _ = runtime.Caller(0)
 
+	// Root folder of this project
+	cwd = filepath.Join(filepath.Dir(b), "../..")
+)
+
+func ReadFile(filepath string) ([]byte, error) {
 	fullPath := path.Join(cwd, filepath)
 
 	return os.ReadFile(fullPath)
@@ -28,10 +32,6 @@ func DivideString(input string) float64 {
 
 func ListFileConfig(folderPath string) []string {
 	var res []string
-	cwd, err := os.Getwd()
-	if err != nil {
-		return res
-	}
 
 	fullPath := path.Join(cwd, folderPath)
 
@@ -52,10 +52,6 @@ func ListFileConfig(folderPath string) []string {
 }
 
 func WriteFile(filepath string, data []byte) error {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
 
 	fullPath := path.Join(cwd, filepath)
 

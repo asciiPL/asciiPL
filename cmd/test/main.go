@@ -8,6 +8,5 @@ import (
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	areaCfg := config.MigrationConfig()
-	_map.Generate(60, areaCfg)
+	_map.Generate(60, config.AreaCfg)
 }
