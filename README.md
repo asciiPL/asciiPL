@@ -9,7 +9,7 @@ One unique feature of this simulator is the ability to generate a world based on
 If you would like to contribute to this project, please fork the repository and submit a pull request with your changes. All contributions are welcome!
 
 ### Tasks
-- [ ] Design and implement a grid map
+- [x] Design and implement a grid map
 - [ ] Setup CI
 - [ ] Collect sample data from movies and novels and model it to a plot configuration
 - [ ] Implement the plot configuration
