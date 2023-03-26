@@ -1,10 +1,12 @@
 package main
 
 import (
-	"awesomeProject/src/screen"
+	"awesomeProject/src/config"
+	"awesomeProject/src/map"
+	"log"
 )
 
 func main() {
-	sc := screen.NewAppScreen()
-	sc.StartScreen(*sc.GenerateScreen)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	_map.Generate(60, config.AreaCfg)
 }

@@ -1,0 +1,75 @@
+areas:
+  - id: 1
+    name: "Uptown"
+    color: 1
+    size: "1/9"
+    constructionRate: "3/5"
+    building:
+      - "**"
+      - "****"
+      - "**\n**"
+      - "***\n *"
+      - "***\n*"
+  - id: 2
+    name: "Slums"
+    color: 2
+    size: "1/9"
+    constructionRate: "4/5"
+    building:
+      - "**"
+      - "****"
+      - "**\n**"
+      - "***\n *"
+      - "***\n*"
+  - id: 3
+    name: "School"
+    color: 3
+    size: "1/9"
+    constructionRate: "3/5"
+    building:
+      - "****\n****"
+  - id: 4
+    name: "Hospital"
+    color: 4
+    size: "1/9"
+    constructionRate: "2/3"
+    building:
+      - "***\n***"
+  - id: 5
+    name: "Forest"
+    color: 5
+    size: "1/9"
+    constructionRate: "1/12"
+    building:
+      - "*"
+  - id: 6
+    name: "Docks"
+    color: 6
+    size: "1/9"
+    constructionRate: "1/5"
+    building:
+      - "******\n******"
+      - "*****\n    *"
+  - id: 7
+    name: "Train station"
+    color: 7
+    size: "1/9"
+    constructionRate: "1/5"
+    building:
+      - "******\n******"
+      - "*****\n    *"
+  - id: 8
+    name: "Chapel"
+    color: 8
+    size: "1/9"
+    constructionRate: "3/5"
+    building:
+      - "*****\n*****\n*****"
+  - id: 9
+    name: "Factory"
+    color: 9
+    size: "1/9"
+    constructionRate: "4/5"
+    building:
+      - "****\n****\n****\n****"
+      - "*****\n*****"
