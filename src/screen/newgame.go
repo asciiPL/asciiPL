@@ -5,7 +5,11 @@ import "github.com/rivo/tview"
 func NewNewGameScreen(appScreen *AppScreen) *Page {
 	imgType := tview.NewList().
 		ShowSecondaryText(false).
-		AddItem("Generate new world", "", 'g', func() { appScreen.SetScreen(appScreen.GenerateScreen) }).
+		AddItem("Generate new world", "", 'g', func() {
+			page := appScreen.GenerateScreen
+			appScreen.SetScreen(page)
+			go GenWorld(page)
+		}).
 		AddItem("Back", "", 'b', func() { appScreen.Back() })
 	imgType.SetTitle("New game").SetBorder(true)
 	grid := tview.NewGrid().

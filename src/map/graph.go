@@ -85,7 +85,7 @@ func Generate(size int, cfg map[int]model.Area) [][]*model.Grid {
 	// Put road_test
 	MinimumConnectIslands(arr)
 	// Print map
-	PrintMap(arr)
+	// PrintMap(arr)
 	return arr
 }
 
