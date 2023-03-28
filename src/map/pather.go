@@ -3,7 +3,6 @@ package _map
 import (
 	"fmt"
 	"github.com/beefsack/go-astar"
-	"log"
 	"strings"
 )
 
@@ -197,17 +196,17 @@ func ParseWorld(input string) World {
 
 func Path(worldInput string) string {
 	world := ParseWorld(worldInput)
-	fmt.Printf("Input world\n%s", world.RenderPath([]astar.Pather{}))
+	//fmt.Printf("Input world\n%s", world.RenderPath([]astar.Pather{}))
 	p, _, found := astar.Path(world.From(), world.To())
 	if !found {
-		log.Print("Could not find a path")
+		//log.Print("Could not find a path")
 	} else {
 		output := world.RenderPath(p)
-		fmt.Printf("Resulting path\n%s", output)
+		//fmt.Printf("Resulting path\n%s", output)
 		return output
 	}
 	if !found {
-		log.Print("Could not find a path")
+		//log.Print("Could not find a path")
 	}
 	return ""
 }

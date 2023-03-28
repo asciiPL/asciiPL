@@ -1,11 +1,17 @@
 package screen
 
 import (
+	"awesomeProject/src/screen/component"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
 func NewGenerateWorldScreen(appScreen *AppScreen) *Page {
+
+	grid := tview.NewGrid().
+		SetRows(5, 0, 0).
+		SetColumns(0, 0, 0).
+		SetBorders(false)
 
 	log := tview.NewList().
 		ShowSecondaryText(false).
@@ -46,12 +52,8 @@ func NewGenerateWorldScreen(appScreen *AppScreen) *Page {
 		})(i)
 	}
 
-	grid := tview.NewGrid().
-		SetColumns(0, 0).
-		SetBorders(false)
-
 	grid.AddItem(option, 0, 0, 1, 1, 0, 100, true).
-		AddItem(log, 0, 1, 1, 1, 0, 100, false)
+		AddItem(log, 1, 0, 2, 1, 0, 100, false)
 
 	appScreen.page.AddPage("generate_world", grid, true, false)
 	return &Page{
@@ -59,4 +61,13 @@ func NewGenerateWorldScreen(appScreen *AppScreen) *Page {
 		"generate_world",
 	}
 
+}
+
+var currentWorld = tview.NewGrid()
+
+func GenWorld(page *Page) {
+	grid := page.grid
+	grid.RemoveItem(currentWorld)
+	currentWorld = component.WorldScreen(30)
+	grid.AddItem(currentWorld, 0, 1, 3, 2, 0, 100, false)
 }
