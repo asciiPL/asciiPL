@@ -60,7 +60,7 @@ type Player struct {
 type Character struct {
 	x int
 	y int
-	// all Character have same structure
+	// Character have same structure in life cycle
 	physicsAttribute []Attribute
 	// each Character have each structure
 	// change in character development
@@ -95,7 +95,8 @@ type Attribute struct {
 }
 
 type Action struct {
-	id int64
+	id   int64
+	name string
 	// expression define logic Character 1 -> Action -> Character 2
 	//      => change Attribute Character 1 && change Attribute Character 2
 	// Can create or change Target
