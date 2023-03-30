@@ -61,7 +61,7 @@ type Character struct {
 	x int
 	y int
 	// Character have same structure in life cycle
-	physicsAttribute []Attribute
+	physicsAttribute PhysicAttribute
 	// each Character have each structure
 	// change in character development
 	psychologyAttribute []Attribute
@@ -72,6 +72,12 @@ type Character struct {
 	plot Plot
 	// define target (Will get interesting Mission with good target)
 	target Target
+}
+
+type PhysicAttribute struct {
+	attributes []Attribute
+	name       string
+	id         int64
 }
 
 type Target struct {
@@ -90,8 +96,9 @@ type Mission struct {
 }
 
 type Attribute struct {
-	code  string
-	value string
+	name      string
+	value     string
+	Attribute []Attribute // Default empty
 }
 
 type Action struct {
