@@ -9,15 +9,15 @@ import (
 )
 
 type Config struct {
-	Areas []model.Area `json:"areas"`
+	Areas []model.Area `yaml:"areas"`
 }
 
 type Migration struct {
-	Version string `json:"version"`
-	Name    string `json:"name"`
+	Version string `yaml:"version"`
+	Name    string `yaml:"name"`
 }
 
-var AreaCfg = MigrationConfig()
+var AreaCfg = map[int]model.Area{}
 
 func MigrationConfig() map[int]model.Area {
 	gridConfigFiles := util.ListFileConfig("config/grid")

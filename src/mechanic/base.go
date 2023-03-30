@@ -80,6 +80,12 @@ type PhysicAttribute struct {
 	id         int64
 }
 
+type Attribute struct {
+	name      string
+	value     string
+	Attribute []Attribute // Default empty
+}
+
 type Target struct {
 	id         int64
 	name       string
@@ -93,12 +99,6 @@ type Target struct {
 type Mission struct {
 	// location where process mission
 	grid *model.Grid
-}
-
-type Attribute struct {
-	name      string
-	value     string
-	Attribute []Attribute // Default empty
 }
 
 type Action struct {
