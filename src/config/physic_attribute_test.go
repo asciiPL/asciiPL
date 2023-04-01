@@ -12,3 +12,7 @@ func TestLoadCfg(t *testing.T) {
 	require.NotNil(t, got[0].Areas)
 	require.NotNil(t, got1[0].Physics)
 }
+
+func Test_buildCfg(t *testing.T) {
+	require.NoError(t, buildCfg())
+}

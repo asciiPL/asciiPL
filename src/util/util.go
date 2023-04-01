@@ -46,6 +46,7 @@ func ListFileConfig(folderPath string) []string {
 		}
 	}
 
+	// sort follow semantic version
 	sort.Strings(res)
 
 	return res
