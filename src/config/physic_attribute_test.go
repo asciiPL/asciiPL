@@ -14,5 +14,5 @@ func TestLoadCfg(t *testing.T) {
 }
 
 func Test_buildCfg(t *testing.T) {
-	require.NoError(t, buildCfg())
+	require.NoError(t, storeCfg())
 }

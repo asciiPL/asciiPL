@@ -1,17 +1,19 @@
 package config
 
 import (
+	"awesomeProject/src/model"
 	"awesomeProject/src/util"
 	"encoding/json"
 	"errors"
 	"github.com/spf13/viper"
+	"golang.org/x/exp/maps"
 	"log"
 	"strings"
 )
 
 type Physics struct {
 	Name      string      `yaml:"name" json:"name"`
-	ID        int64       `yaml:"id" json:"id"`
+	ID        int         `yaml:"id" json:"id"`
 	Attribute []Attribute `yaml:"attribute" json:"attribute"`
 }
 
@@ -28,10 +30,6 @@ var (
 
 type MigrationCfg struct {
 	Physics []Physics `yaml:"physics"`
-}
-
-type Configuration struct {
-	v *viper.Viper
 }
 
 func LoadCfg() ([]Config, []MigrationCfg) {
@@ -100,15 +98,35 @@ func storeConfig(configFiles string, migrationCfgs []interface{}, version string
 	return nil
 }
 
-func buildCfg() error {
+func storeCfg() error {
 	areaMigrations, physicAttributeMigrations := LoadCfg()
-	err := storeConfig("area.json", append(make([]interface{}, 0), areaMigrations), gridConfigFiles[len(gridConfigFiles)-1])
+	err := storeConfig("area.json", append(make([]interface{}, 0), buildAreaConfig(areaMigrations)), gridConfigFiles[len(gridConfigFiles)-1])
 	if err != nil {
 		return err
 	}
-	err = storeConfig("character_attribute.physic.json", append(make([]interface{}, 0), physicAttributeMigrations), physicAttributeFiles[len(physicAttributeFiles)-1])
+	err = storeConfig("character_attribute.physic.json", append(make([]interface{}, 0), buildPhysicConfig(physicAttributeMigrations)), physicAttributeFiles[len(physicAttributeFiles)-1])
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func buildAreaConfig(migrations []Config) []model.Area {
+	id2Cfs := map[int]model.Area{}
+	for _, cfg := range migrations {
+		for _, area := range cfg.Areas {
+			id2Cfs[area.Id] = area
+		}
+	}
+	return maps.Values(id2Cfs)
+}
+
+func buildPhysicConfig(migrations []MigrationCfg) []Physics {
+	id2Cfs := map[int]Physics{}
+	for _, cfg := range migrations {
+		for _, physic := range cfg.Physics {
+			id2Cfs[physic.ID] = physic
+		}
+	}
+	return maps.Values(id2Cfs)
 }
