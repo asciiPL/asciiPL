@@ -1,9 +1,9 @@
 package component
 
 import (
-	"awesomeProject/src/config"
-	_map "awesomeProject/src/map"
-	"awesomeProject/src/model"
+	"github.com/asciiPL/asciiPL/src/config"
+	_map "github.com/asciiPL/asciiPL/src/map"
+	"github.com/asciiPL/asciiPL/src/model"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"strconv"
@@ -14,7 +14,7 @@ func WorldScreen(size int) *tview.Grid {
 	cols := make([]int, size)
 
 	//[][]*model.Grid
-	world := _map.Generate(size, config.AreaCfg)
+	world := _map.Generate(size, config.LoadCfg(true).AreaConfig)
 
 	grid := tview.NewGrid().
 		SetRows(rows...).

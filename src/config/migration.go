@@ -1,78 +1,138 @@
 package config
 
 import (
-	"awesomeProject/src/model"
-	"awesomeProject/src/util"
 	"encoding/json"
+	"errors"
+	"github.com/asciiPL/asciiPL/src/model"
+	"github.com/asciiPL/asciiPL/src/util"
+	"github.com/spf13/viper"
+	"golang.org/x/exp/maps"
 	"log"
 	"strings"
 )
 
-type Config struct {
-	Areas []model.Area `json:"areas"`
+var (
+	gridConfigFiles       = util.ListFileConfig("config/grid")
+	physicAttributeFiles  = util.ListFileConfig("config/character_attribute/physics")
+	psychologyConfigFiles = util.ListFileConfig("config/character_attribute/psychology")
+)
+
+func LoadMigration() ([]AreaMigration, []PhysicMigration, []PsychologyMigration) {
+	physicAttributeMigrations := make([]PhysicMigration, len(physicAttributeFiles))
+	err := parseMigration("config/character_attribute/physics", physicAttributeFiles, append(make([]interface{}, 0), physicAttributeMigrations))
+	if err != nil {
+		log.Printf(err.Error())
+		return nil, nil, nil
+	}
+
+	areaMigrations := make([]AreaMigration, len(gridConfigFiles))
+	err = parseMigration("config/grid", gridConfigFiles, append(make([]interface{}, 0), areaMigrations))
+	if err != nil {
+		log.Printf(err.Error())
+		return nil, nil, nil
+	}
+
+	psychologyMigration := make([]PsychologyMigration, len(psychologyConfigFiles))
+	err = parseMigration("config/character_attribute/psychology", psychologyConfigFiles, append(make([]interface{}, 0), psychologyMigration))
+	if err != nil {
+		log.Printf(err.Error())
+		return nil, nil, nil
+	}
+
+	return areaMigrations, physicAttributeMigrations, psychologyMigration
 }
 
-type Migration struct {
-	Version string `json:"version"`
-	Name    string `json:"name"`
+func parseMigration(configPath string, configFiles []string, migrationCfgs []interface{}) error {
+	if len(configFiles) != len(migrationCfgs) {
+		return errors.New("can't parse config with configFiles, not equals len")
+	}
+	v := viper.New()
+	v.SetConfigType("yaml")
+	v.AddConfigPath("../../" + configPath + "/")
+	for i := 0; i < len(configFiles); i++ {
+		v.SetConfigName(configFiles[i])
+		if err := v.ReadInConfig(); err != nil {
+			log.Fatalf("Error reading config file, %s", err)
+		}
+
+		if err := v.Unmarshal(&migrationCfgs[i]); err != nil {
+			log.Fatalf("Error unmarshaling config, %s", err)
+		}
+	}
+	return nil
 }
 
-var AreaCfg = MigrationConfig()
-
-func MigrationConfig() map[int]model.Area {
-	gridConfigFiles := util.ListFileConfig("config/grid")
-	for _, fileName := range gridConfigFiles {
-		MigrationGridConfig(fileName)
-	}
-	areaByte, err := util.ReadFile("config/data/areas.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	var areaCfg []model.Area
-	err = json.Unmarshal(areaByte, &areaCfg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	mapCfg := map[int]model.Area{}
-	for _, area := range areaCfg {
-		mapCfg[area.Id] = area
-	}
-	return mapCfg
+type Data struct {
+	Configs interface{} `json:"configs"`
+	Version string      `json:"version"`
 }
 
-func MigrationGridConfig(fileName string) {
-	//configFile, err := util.ReadFile("config/grid/0.0.1_init_config.json")
-	configFile, err := util.ReadFile("config/grid/" + fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var config Config
-	err = json.Unmarshal(configFile, &config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	areasJSON, err := json.Marshal(config.Areas)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = util.WriteFile("config/data/areas.json", areasJSON)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	version := strings.Split(fileName, "_")[0]
-	migrationName := strings.ReplaceAll(fileName, version+"_", "")
-	migrationName = strings.ReplaceAll(migrationName, ".json", "")
-
-	migrationJSON, err := json.Marshal(Migration{
+func storeConfig(configFiles string, migrationCfgs []interface{}, version string) error {
+	v := viper.New()
+	v.SetConfigType("json")
+	v.SetConfigName(configFiles)
+	v.AddConfigPath("../../config/data" + "/")
+	b, err := json.Marshal(Data{
+		Configs: migrationCfgs[0],
 		Version: version,
-		Name:    migrationName,
 	})
-	err = util.WriteFile("config/data/migration.json", migrationJSON)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	err = v.ReadConfig(strings.NewReader(string(b)))
+	if err != nil {
+		return err
+	}
+	err = v.WriteConfig()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func storeCfg() error {
+	areaMigrations, physicAttributeMigrations, psychologyMigration := LoadMigration()
+	err := storeConfig("area.json", append(make([]interface{}, 0), buildAreaConfig(areaMigrations)), gridConfigFiles[len(gridConfigFiles)-1])
+	if err != nil {
+		return err
+	}
+	err = storeConfig("character_attribute.physic.json", append(make([]interface{}, 0), buildPhysicConfig(physicAttributeMigrations)), physicAttributeFiles[len(physicAttributeFiles)-1])
+	if err != nil {
+		return err
+	}
+	err = storeConfig("character_attribute.psychology.json", append(make([]interface{}, 0), buildPsychologyConfig(psychologyMigration)), psychologyConfigFiles[len(psychologyConfigFiles)-1])
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func buildPsychologyConfig(migrations []PsychologyMigration) []Record {
+	id2Cfs := map[int]Record{}
+	for _, cfg := range migrations {
+		for _, physic := range cfg.Psychology {
+			id2Cfs[physic.ID] = physic
+		}
+	}
+	return maps.Values(id2Cfs)
+}
+
+func buildAreaConfig(migrations []AreaMigration) []model.Area {
+	id2Cfs := map[int]model.Area{}
+	for _, cfg := range migrations {
+		for _, area := range cfg.Areas {
+			id2Cfs[area.Id] = area
+		}
+	}
+	return maps.Values(id2Cfs)
+}
+
+func buildPhysicConfig(migrations []PhysicMigration) []Record {
+	id2Cfs := map[int]Record{}
+	for _, cfg := range migrations {
+		for _, physic := range cfg.Physics {
+			id2Cfs[physic.ID] = physic
+		}
+	}
+	return maps.Values(id2Cfs)
 }

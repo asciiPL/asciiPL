@@ -41,11 +41,12 @@ func ListFileConfig(folderPath string) []string {
 	}
 
 	for _, file := range files {
-		if !file.IsDir() && strings.Contains(file.Name(), ".json") {
+		if !file.IsDir() && strings.Contains(file.Name(), ".yaml") {
 			res = append(res, file.Name())
 		}
 	}
 
+	// sort follow semantic version
 	sort.Strings(res)
 
 	return res

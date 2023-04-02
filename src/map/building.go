@@ -1,6 +1,8 @@
 package _map
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Building struct {
 	structure [][][]int
@@ -25,6 +27,17 @@ func convertBuilding(buildings []string) []*Building {
 			}
 		}
 		structure = append(structure, row)
+		maxCol := 0
+		for i := range structure {
+			if maxCol < len(structure[i]) {
+				maxCol = len(structure[i])
+			}
+		}
+		for i := range structure {
+			for len(structure[i]) < maxCol {
+				structure[i] = append(structure[i], 0)
+			}
+		}
 		res = append(res, &Building{
 			structure: generateUniqueArrays(structure),
 			size:      s,
@@ -48,11 +61,11 @@ func generateUniqueArrays(matrix [][]int) [][][]int {
 }
 
 func copyArr(matrix [][]int) [][]int {
-	rotated := make([][]int, len(matrix))
-	for j := range rotated {
-		rotated[j] = make([]int, len(matrix[j]))
-	}
 	n, m := len(matrix), len(matrix[0])
+	rotated := make([][]int, n)
+	for j := range rotated {
+		rotated[j] = make([]int, m)
+	}
 	for i := 0; i < n; i++ {
 		for j := 0; j < m; j++ {
 			rotated[i][j] = matrix[i][j]

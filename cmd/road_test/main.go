@@ -1,13 +1,13 @@
 package main
 
 import (
-	"awesomeProject/src/config"
-	_map "awesomeProject/src/map"
-	"awesomeProject/src/model"
+	"github.com/asciiPL/asciiPL/src/config"
+	_map "github.com/asciiPL/asciiPL/src/map"
+	"github.com/asciiPL/asciiPL/src/model"
 )
 
 func main() {
-	area := config.AreaCfg[1]
+	area := config.LoadCfg(true).AreaConfig[1]
 	grids := [][]*model.Grid{
 		{model.NewGrid(&area, 0, 0), model.NewGrid(&area, 0, 1),
 			model.NewGrid(&area, 0, 2), model.NewGrid(&area, 0, 3),

@@ -1,0 +1,80 @@
+psychology:
+  - id: 1
+    name: human
+    attribute:
+      - name: psychology_index
+        attribute:
+          - name: happy
+            value: 0-100
+          - name: sad
+            value: 0-100
+          - name: angry
+            value: 0-100
+          - name: lonely
+            value: 0-100
+          - name: anxious
+            value: 0-100
+          - name: angry
+            value: 0-100
+          - name: confident
+            value: 0-100
+          - name: insecure
+            value: 0-100
+          - name: empathetic
+            value: 0-100
+          - name: selfish
+            value: 0-100
+          - name: introverted
+            value: 0-100
+          - name: extroverted
+            value: 0-100
+      - name: scare
+        attribute:
+          - name: primal
+            attribute:
+              - name: death
+                value: 0-100
+              - name: darkness
+                value: 0-100
+              - name: isolation
+                value: 0-100
+              - name: mutilation
+                value: 0-100
+              - name: control
+                value: 0-100
+              - name: humiliation
+                value: 0-100
+              - name: confinement
+                value: 0-100
+              - name: abandonment
+                value: 0-100
+              - name: helplessness
+                value: 0-100
+      - name: identity
+        attribute:
+          - name: action_index
+            attribute:
+              - name: courage
+                description: ability to face and overcome fear, danger, or difficulty
+                value: 0-100
+              - name: decisiveness
+                description: ability to make decisions and take firm actions confidently and without hesitation
+                value: 0-100
+              - name: proactivity
+                description: ability to take action automatically without waiting to be pushed
+                value: 0-100
+              - name: creativity
+                description: ability to imagine and create new solutions to solve problems or achieve a certain goal
+                value: 0-100
+              - name: perseverance
+                description: ability to continue to strive and maintain efforts despite difficulties, failures, or obstacles
+                value: 0-100
+              - name: responsibility
+                description: ability to take responsibility for one's actions and make sound decisions
+                value: 0-100
+              - name: focus
+                description: ability to focus on the goal and not be distracted by other factors
+                value: 0-100
+              - name: realism
+                description: ability to make decisions and take action based on reality and one's abilities
+                value: 0-100

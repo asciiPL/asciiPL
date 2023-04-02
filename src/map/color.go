@@ -1,9 +1,9 @@
 package _map
 
 import (
-	"awesomeProject/src/model"
 	"fmt"
 	"github.com/TwiN/go-color"
+	"github.com/asciiPL/asciiPL/src/model"
 )
 
 func PrintMap(arr [][]*model.Grid) {

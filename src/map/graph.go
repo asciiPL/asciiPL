@@ -1,8 +1,8 @@
 package _map
 
 import (
-	"awesomeProject/src/model"
-	"awesomeProject/src/util"
+	"github.com/asciiPL/asciiPL/src/model"
+	"github.com/asciiPL/asciiPL/src/util"
 	"math/rand"
 	"sync"
 	"time"

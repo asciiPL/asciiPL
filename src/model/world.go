@@ -1,12 +1,12 @@
 package model
 
 type Area struct {
-	Id               int      `json:"id"`
-	Name             string   `json:"name"`
-	Color            int      `json:"color"`
-	Size             string   `json:"size"`
-	ConstructionRate string   `json:"constructionRate"`
-	Building         []string `json:"building"`
+	Id               int      `yaml:"id"`
+	Name             string   `yaml:"name"`
+	Color            int      `yaml:"color"`
+	Size             string   `yaml:"size"`
+	ConstructionRate string   `yaml:"constructionRate"`
+	Building         []string `yaml:"building"`
 }
 type Road struct {
 	name  string
