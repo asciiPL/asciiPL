@@ -68,6 +68,7 @@ var currentWorld = tview.NewGrid()
 func GenWorld(page *Page) {
 	grid := page.grid
 	grid.RemoveItem(currentWorld)
-	currentWorld = component.WorldScreen(30)
+	currentWorld = component.
+		WorldScreen(30)
 	grid.AddItem(currentWorld, 0, 1, 3, 2, 0, 100, false)
 }

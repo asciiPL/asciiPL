@@ -14,7 +14,7 @@ func WorldScreen(size int) *tview.Grid {
 	cols := make([]int, size)
 
 	//[][]*model.Grid
-	world := _map.Generate(size, config.AreaCfg)
+	world := _map.Generate(size, config.LoadCfg(true).AreaConfig)
 
 	grid := tview.NewGrid().
 		SetRows(rows...).

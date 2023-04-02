@@ -1,151 +1,149 @@
 {
   "configs": [
-    [
-      {
-        "attribute": [
-          {
-            "attribute": [
-              {
-                "attribute": null,
-                "name": "height",
-                "value": "40-250"
-              },
-              {
-                "attribute": null,
-                "name": "weight",
-                "value": "1-200"
-              }
-            ],
-            "name": "body_index",
-            "value": ""
-          },
-          {
-            "attribute": [
-              {
-                "attribute": null,
-                "name": "eyesight",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "hearing",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "taste",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "touch",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "smell",
-                "value": "0-100"
-              }
-            ],
-            "name": "senses",
-            "value": ""
-          },
-          {
-            "attribute": [
-              {
-                "attribute": [
-                  {
-                    "attribute": null,
-                    "name": "hair",
-                    "value": "0-100"
-                  },
-                  {
-                    "attribute": null,
-                    "name": "left_ear",
-                    "value": "0-100"
-                  },
-                  {
-                    "attribute": null,
-                    "name": "right_ear",
-                    "value": "0-100"
-                  },
-                  {
-                    "attribute": null,
-                    "name": "left_eye",
-                    "value": "0-100"
-                  },
-                  {
-                    "attribute": null,
-                    "name": "right_eye",
-                    "value": "0-100"
-                  },
-                  {
-                    "attribute": null,
-                    "name": "teeth",
-                    "value": "0-32"
-                  }
-                ],
-                "name": "head",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "body",
-                "value": "0-100"
-              },
-              {
-                "attribute": [
-                  {
-                    "attribute": [
-                      {
-                        "attribute": null,
-                        "name": "finger",
-                        "value": "5"
-                      }
-                    ],
-                    "name": "leftHand",
-                    "value": "0-100"
-                  }
-                ],
-                "name": "leftArm",
-                "value": "0-100"
-              },
-              {
-                "attribute": [
-                  {
-                    "attribute": [
-                      {
-                        "attribute": null,
-                        "name": "finger",
-                        "value": "5"
-                      }
-                    ],
-                    "name": "leftHand",
-                    "value": "0-100"
-                  }
-                ],
-                "name": "rightArm",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "leftLeg",
-                "value": "0-100"
-              },
-              {
-                "attribute": null,
-                "name": "rightLeg",
-                "value": "0-100"
-              }
-            ],
-            "name": "all_body",
-            "value": ""
-          }
-        ],
-        "id": 1,
-        "name": "human"
-      }
-    ]
+    {
+      "attribute": [
+        {
+          "attribute": [
+            {
+              "attribute": null,
+              "name": "height",
+              "value": "40-250"
+            },
+            {
+              "attribute": null,
+              "name": "weight",
+              "value": "1-200"
+            }
+          ],
+          "name": "body_index",
+          "value": ""
+        },
+        {
+          "attribute": [
+            {
+              "attribute": null,
+              "name": "eyesight",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "hearing",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "taste",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "touch",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "smell",
+              "value": "0-100"
+            }
+          ],
+          "name": "senses",
+          "value": ""
+        },
+        {
+          "attribute": [
+            {
+              "attribute": [
+                {
+                  "attribute": null,
+                  "name": "hair",
+                  "value": "0-100"
+                },
+                {
+                  "attribute": null,
+                  "name": "left_ear",
+                  "value": "0-100"
+                },
+                {
+                  "attribute": null,
+                  "name": "right_ear",
+                  "value": "0-100"
+                },
+                {
+                  "attribute": null,
+                  "name": "left_eye",
+                  "value": "0-100"
+                },
+                {
+                  "attribute": null,
+                  "name": "right_eye",
+                  "value": "0-100"
+                },
+                {
+                  "attribute": null,
+                  "name": "teeth",
+                  "value": "0-32"
+                }
+              ],
+              "name": "head",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "body",
+              "value": "0-100"
+            },
+            {
+              "attribute": [
+                {
+                  "attribute": [
+                    {
+                      "attribute": null,
+                      "name": "finger",
+                      "value": "5"
+                    }
+                  ],
+                  "name": "leftHand",
+                  "value": "0-100"
+                }
+              ],
+              "name": "leftArm",
+              "value": "0-100"
+            },
+            {
+              "attribute": [
+                {
+                  "attribute": [
+                    {
+                      "attribute": null,
+                      "name": "finger",
+                      "value": "5"
+                    }
+                  ],
+                  "name": "leftHand",
+                  "value": "0-100"
+                }
+              ],
+              "name": "rightArm",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "leftLeg",
+              "value": "0-100"
+            },
+            {
+              "attribute": null,
+              "name": "rightLeg",
+              "value": "0-100"
+            }
+          ],
+          "name": "all_body",
+          "value": ""
+        }
+      ],
+      "id": 1,
+      "name": "human"
+    }
   ],
   "version": "0.0.1_init_physic_attribute.yaml"
 }

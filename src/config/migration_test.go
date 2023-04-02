@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestLoadCfg(t *testing.T) {
-	got, got1 := LoadCfg()
+func TestLoadMigration(t *testing.T) {
+	got, got1 := LoadMigration()
 	require.Len(t, got, 1)
 	require.Len(t, got1, 1)
 	require.NotNil(t, got[0].Areas)
