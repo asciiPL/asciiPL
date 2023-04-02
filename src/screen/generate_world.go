@@ -1,7 +1,7 @@
 package screen
 
 import (
-	"awesomeProject/src/screen/component"
+	"github.com/asciiPL/asciiPL/src/screen/component"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )

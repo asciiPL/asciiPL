@@ -1,8 +1,8 @@
 package main
 
 import (
-	"awesomeProject/src/config"
-	"awesomeProject/src/map"
+	"github.com/asciiPL/asciiPL/src/config"
+	"github.com/asciiPL/asciiPL/src/map"
 	"log"
 )
 

@@ -1,9 +1,9 @@
 package component
 
 import (
-	"awesomeProject/src/config"
-	_map "awesomeProject/src/map"
-	"awesomeProject/src/model"
+	"github.com/asciiPL/asciiPL/src/config"
+	_map "github.com/asciiPL/asciiPL/src/map"
+	"github.com/asciiPL/asciiPL/src/model"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"strconv"

@@ -1,0 +1,160 @@
+{
+  "configs": [
+    {
+      "attribute": [
+        {
+          "attribute": [
+            {
+              "name": "happy",
+              "value": "0-100"
+            },
+            {
+              "name": "sad",
+              "value": "0-100"
+            },
+            {
+              "name": "angry",
+              "value": "0-100"
+            },
+            {
+              "name": "lonely",
+              "value": "0-100"
+            },
+            {
+              "name": "anxious",
+              "value": "0-100"
+            },
+            {
+              "name": "angry",
+              "value": "0-100"
+            },
+            {
+              "name": "confident",
+              "value": "0-100"
+            },
+            {
+              "name": "insecure",
+              "value": "0-100"
+            },
+            {
+              "name": "empathetic",
+              "value": "0-100"
+            },
+            {
+              "name": "selfish",
+              "value": "0-100"
+            },
+            {
+              "name": "introverted",
+              "value": "0-100"
+            },
+            {
+              "name": "extroverted",
+              "value": "0-100"
+            }
+          ],
+          "name": "psychology_index"
+        },
+        {
+          "attribute": [
+            {
+              "attribute": [
+                {
+                  "name": "death",
+                  "value": "0-100"
+                },
+                {
+                  "name": "darkness",
+                  "value": "0-100"
+                },
+                {
+                  "name": "isolation",
+                  "value": "0-100"
+                },
+                {
+                  "name": "mutilation",
+                  "value": "0-100"
+                },
+                {
+                  "name": "control",
+                  "value": "0-100"
+                },
+                {
+                  "name": "humiliation",
+                  "value": "0-100"
+                },
+                {
+                  "name": "confinement",
+                  "value": "0-100"
+                },
+                {
+                  "name": "abandonment",
+                  "value": "0-100"
+                },
+                {
+                  "name": "helplessness",
+                  "value": "0-100"
+                }
+              ],
+              "name": "primal"
+            }
+          ],
+          "name": "scare"
+        },
+        {
+          "attribute": [
+            {
+              "attribute": [
+                {
+                  "description": "ability to face and overcome fear, danger, or difficulty",
+                  "name": "courage",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to make decisions and take firm actions confidently and without hesitation",
+                  "name": "decisiveness",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to take action automatically without waiting to be pushed",
+                  "name": "proactivity",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to imagine and create new solutions to solve problems or achieve a certain goal",
+                  "name": "creativity",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to continue to strive and maintain efforts despite difficulties, failures, or obstacles",
+                  "name": "perseverance",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to take responsibility for one's actions and make sound decisions",
+                  "name": "responsibility",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to focus on the goal and not be distracted by other factors",
+                  "name": "focus",
+                  "value": "0-100"
+                },
+                {
+                  "description": "ability to make decisions and take action based on reality and one's abilities",
+                  "name": "realism",
+                  "value": "0-100"
+                }
+              ],
+              "name": "action_index"
+            }
+          ],
+          "name": "identity"
+        }
+      ],
+      "id": 1,
+      "name": "human"
+    }
+  ],
+  "version": "0.0.1_init_psychology_attribute.yaml"
+}

@@ -1,8 +1,8 @@
 package _map
 
 import (
-	"awesomeProject/src/model"
 	"fmt"
+	"github.com/asciiPL/asciiPL/src/model"
 	"math"
 )
 

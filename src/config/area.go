@@ -1,7 +1,7 @@
 package config
 
 import (
-	"awesomeProject/src/model"
+	"github.com/asciiPL/asciiPL/src/model"
 )
 
 type AreaMigration struct {

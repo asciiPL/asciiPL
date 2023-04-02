@@ -1,6 +1,6 @@
 package mechanic
 
-import "awesomeProject/src/model"
+import "github.com/asciiPL/asciiPL/src/model"
 
 // Plot example: simulator three-act structure
 // 1: Setup
@@ -17,7 +17,7 @@ import "awesomeProject/src/model"
 //     End:
 //   - Happy ending: Character win
 //   - Sad ending: Character failure or die
-//   - Open ending: Do not solve all the problems that occur in the movie, leaving doubts and questions
+//   - Open ending: Do not solve all the problems that occur, leaving doubts and questions
 type Plot struct {
 	event []Event
 	// time start plot

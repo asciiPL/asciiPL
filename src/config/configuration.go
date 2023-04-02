@@ -1,7 +1,7 @@
 package config
 
 import (
-	"awesomeProject/src/model"
+	"github.com/asciiPL/asciiPL/src/model"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -12,13 +12,32 @@ type AreaConfig struct {
 }
 
 type PhysicConfig struct {
-	Configs []Physics `json:"configs"`
-	Version string    `json:"version"`
+	Configs []Record `json:"configs"`
+	Version string   `json:"version"`
+}
+
+type PsychologyConfig struct {
+	Configs []Record `json:"configs"`
+	Version string   `json:"version"`
 }
 
 type Configuration struct {
 	AreaConfig   map[int]model.Area
-	PhysicConfig map[int]Physics
+	PhysicConfig map[int]Record
+	PsychoConfig map[int]Record
+}
+
+type Record struct {
+	Name      string      `yaml:"name" json:"name"`
+	ID        int         `yaml:"id" json:"id"`
+	Attribute []Attribute `yaml:"attribute" json:"attribute"`
+}
+
+type Attribute struct {
+	Name        string      `yaml:"name" json:"name,omitempty"`
+	Value       string      `yaml:"value" json:"value,omitempty"`
+	Description string      `yaml:"description" json:"description,omitempty"`
+	Attribute   []Attribute `yaml:"attribute" json:"attribute,omitempty"`
 }
 
 func LoadCfg(isRoot bool) *Configuration {
@@ -35,14 +54,29 @@ func LoadCfg(isRoot bool) *Configuration {
 		log.Printf(err.Error())
 		return nil
 	}
+	psychoConfig := PsychologyConfig{}
+	err = parseConfig(isRoot, "config/data", "character_attribute.psychology.json", &psychoConfig)
+	if err != nil {
+		log.Printf(err.Error())
+		return nil
+	}
 	return &Configuration{
 		AreaConfig:   mappingArea(areaConfig),
 		PhysicConfig: mappingPhysic(physicConfig),
+		PsychoConfig: mappingPsycho(psychoConfig),
 	}
 }
 
-func mappingPhysic(config PhysicConfig) (m map[int]Physics) {
-	m = make(map[int]Physics, 0)
+func mappingPsycho(config PsychologyConfig) (m map[int]Record) {
+	m = make(map[int]Record, 0)
+	for _, config := range config.Configs {
+		m[config.ID] = config
+	}
+	return m
+}
+
+func mappingPhysic(config PhysicConfig) (m map[int]Record) {
+	m = make(map[int]Record, 0)
 	for _, config := range config.Configs {
 		m[config.ID] = config
 	}

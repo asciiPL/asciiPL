@@ -1,7 +1,7 @@
 package main
 
 import (
-	"awesomeProject/src/screen"
+	"github.com/asciiPL/asciiPL/src/screen"
 )
 
 func main() {
