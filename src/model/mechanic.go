@@ -16,12 +16,17 @@ type Attribute struct {
 type Action struct {
 	Name       string       `yaml:"name" json:"name"`
 	ID         int          `yaml:"id" json:"id"`
-	Source     Record       `yaml:"source" json:"source"`
-	Target     Record       `yaml:"source" json:"target"`
+	Source     Character    `yaml:"source" json:"source"`
+	Target     Character    `yaml:"source" json:"target"`
 	Expression []Expression `yaml:"expression" json:"expression"`
 }
 
 type Expression struct {
 	Index   int    `yaml:"index" json:"index"`
 	Command string `yaml:"command" json:"command"`
+}
+
+type Character struct {
+	Physic     Record `yaml:"physic" json:"physic"`
+	Psychology Record `yaml:"psychology" json:"psychology"`
 }

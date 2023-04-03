@@ -10,14 +10,28 @@
       "id": 1,
       "name": "praise",
       "source": {
-        "attribute": null,
-        "id": 0,
-        "name": ""
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
       },
       "target": {
-        "attribute": null,
-        "id": 0,
-        "name": ""
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
       }
     },
     {
@@ -30,14 +44,28 @@
       "id": 2,
       "name": "insults",
       "source": {
-        "attribute": null,
-        "id": 0,
-        "name": ""
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
       },
       "target": {
-        "attribute": null,
-        "id": 0,
-        "name": ""
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
       }
     }
   ],

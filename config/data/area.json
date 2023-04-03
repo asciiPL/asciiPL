@@ -2,6 +2,69 @@
   "configs": [
     {
       "building": [
+        "*****\n*****\n*****"
+      ],
+      "color": 8,
+      "constructionrate": "3/5",
+      "id": 8,
+      "name": "Chapel",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "****\n****\n****\n****",
+        "*****\n*****"
+      ],
+      "color": 9,
+      "constructionrate": "4/5",
+      "id": 9,
+      "name": "Factory",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "*"
+      ],
+      "color": 5,
+      "constructionrate": "1/12",
+      "id": 5,
+      "name": "Forest",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "******\n******",
+        "*****\n    *"
+      ],
+      "color": 6,
+      "constructionrate": "1/5",
+      "id": 6,
+      "name": "Docks",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "******\n******",
+        "*****\n    *"
+      ],
+      "color": 7,
+      "constructionrate": "1/5",
+      "id": 7,
+      "name": "Train station",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "***\n***"
+      ],
+      "color": 4,
+      "constructionrate": "2/3",
+      "id": 4,
+      "name": "Hospital",
+      "size": "1/9"
+    },
+    {
+      "building": [
         "**",
         "****",
         "**\n**",
@@ -36,69 +99,6 @@
       "constructionrate": "3/5",
       "id": 3,
       "name": "School",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "***\n***"
-      ],
-      "color": 4,
-      "constructionrate": "2/3",
-      "id": 4,
-      "name": "Hospital",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "******\n******",
-        "*****\n    *"
-      ],
-      "color": 6,
-      "constructionrate": "1/5",
-      "id": 6,
-      "name": "Docks",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "*****\n*****\n*****"
-      ],
-      "color": 8,
-      "constructionrate": "3/5",
-      "id": 8,
-      "name": "Chapel",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "*"
-      ],
-      "color": 5,
-      "constructionrate": "1/12",
-      "id": 5,
-      "name": "Forest",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "******\n******",
-        "*****\n    *"
-      ],
-      "color": 7,
-      "constructionrate": "1/5",
-      "id": 7,
-      "name": "Train station",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "****\n****\n****\n****",
-        "*****\n*****"
-      ],
-      "color": 9,
-      "constructionrate": "4/5",
-      "id": 9,
-      "name": "Factory",
       "size": "1/9"
     }
   ],
