@@ -1,0 +1,45 @@
+{
+  "configs": [
+    {
+      "expression": [
+        {
+          "command": "source.happy = int(source.happy + (100-source.happy) * 0.1)",
+          "index": 10
+        }
+      ],
+      "id": 1,
+      "name": "praise",
+      "source": {
+        "attribute": null,
+        "id": 0,
+        "name": ""
+      },
+      "target": {
+        "attribute": null,
+        "id": 0,
+        "name": ""
+      }
+    },
+    {
+      "expression": [
+        {
+          "command": "source.angry = int(source.angry + (100-source.angry) * 0.1)",
+          "index": 10
+        }
+      ],
+      "id": 2,
+      "name": "insults",
+      "source": {
+        "attribute": null,
+        "id": 0,
+        "name": ""
+      },
+      "target": {
+        "attribute": null,
+        "id": 0,
+        "name": ""
+      }
+    }
+  ],
+  "version": "0.0.1_init_action.yaml"
+}

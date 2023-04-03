@@ -61,29 +61,24 @@ type Character struct {
 	x int
 	y int
 	// Character have same structure in life cycle
-	physicsAttribute PhysicAttribute
+	physicsAttribute model.Record
 	// each Character have each structure
 	// change in character development
-	psychologyAttribute []Attribute
+	psychologyAttribute model.Record
 	// each Character have each structure
 	// change in character development
-	powerAttribute []Attribute
+	powerAttribute model.Record
 	// define character's fate
 	plot Plot
 	// define target (Will get interesting Mission with good target)
 	target Target
 }
 
-type PhysicAttribute struct {
-	attributes []Attribute
-	name       string
-	id         int64
-}
-
-type Attribute struct {
-	name      string
-	value     string
-	Attribute []Attribute // Default empty
+func NewCharacter(physicConfig model.Record, psychologyConfig model.Record) Character {
+	return Character{
+		physicsAttribute:    physicConfig,
+		psychologyAttribute: psychologyConfig,
+	}
 }
 
 type Target struct {

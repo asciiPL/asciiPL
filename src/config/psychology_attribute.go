@@ -1,5 +1,7 @@
 package config
 
+import "github.com/asciiPL/asciiPL/src/model"
+
 type PsychologyMigration struct {
-	Psychology []Record `yaml:"psychology"`
+	Psychology []model.Record `yaml:"psychology"`
 }

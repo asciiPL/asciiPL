@@ -1,0 +1,31 @@
+actions:
+  - id: 1
+    name: praise
+    source:
+      physic:
+        id: 1
+      psychology:
+        id: 1
+    target:
+      physic:
+        id: 1
+      psychology:
+        id: 1
+    expression:
+      - index: 10
+        command: source.happy = int(source.happy + (100-source.happy) * 0.1)
+  - id: 2
+    name: insults
+    source:
+      physic:
+        id: 1
+      psychology:
+        id: 1
+    target:
+      physic:
+        id: 1
+      psychology:
+        id: 1
+    expression:
+      - index: 10
+        command: source.angry = int(source.angry + (100-source.angry) * 0.1)
