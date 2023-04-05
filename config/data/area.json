@@ -2,6 +2,41 @@
   "configs": [
     {
       "building": [
+        "**",
+        "****",
+        "**\n**",
+        "***\n *",
+        "***\n*"
+      ],
+      "color": 2,
+      "constructionrate": "4/5",
+      "id": 2,
+      "name": "Slums",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "****\n****"
+      ],
+      "color": 3,
+      "constructionrate": "3/5",
+      "id": 3,
+      "name": "School",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "******\n******",
+        "*****\n    *"
+      ],
+      "color": 7,
+      "constructionrate": "1/5",
+      "id": 7,
+      "name": "Train station",
+      "size": "1/9"
+    },
+    {
+      "building": [
         "*****\n*****\n*****"
       ],
       "color": 8,
@@ -23,6 +58,30 @@
     },
     {
       "building": [
+        "**",
+        "****",
+        "**\n**",
+        "***\n *",
+        "***\n*"
+      ],
+      "color": 1,
+      "constructionrate": "3/5",
+      "id": 1,
+      "name": "Uptown",
+      "size": "1/9"
+    },
+    {
+      "building": [
+        "***\n***"
+      ],
+      "color": 4,
+      "constructionrate": "2/3",
+      "id": 4,
+      "name": "Hospital",
+      "size": "1/9"
+    },
+    {
+      "building": [
         "*"
       ],
       "color": 5,
@@ -40,65 +99,6 @@
       "constructionrate": "1/5",
       "id": 6,
       "name": "Docks",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "******\n******",
-        "*****\n    *"
-      ],
-      "color": 7,
-      "constructionrate": "1/5",
-      "id": 7,
-      "name": "Train station",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "***\n***"
-      ],
-      "color": 4,
-      "constructionrate": "2/3",
-      "id": 4,
-      "name": "Hospital",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "**",
-        "****",
-        "**\n**",
-        "***\n *",
-        "***\n*"
-      ],
-      "color": 1,
-      "constructionrate": "3/5",
-      "id": 1,
-      "name": "Uptown",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "**",
-        "****",
-        "**\n**",
-        "***\n *",
-        "***\n*"
-      ],
-      "color": 2,
-      "constructionrate": "4/5",
-      "id": 2,
-      "name": "Slums",
-      "size": "1/9"
-    },
-    {
-      "building": [
-        "****\n****"
-      ],
-      "color": 3,
-      "constructionrate": "3/5",
-      "id": 3,
-      "name": "School",
       "size": "1/9"
     }
   ],
