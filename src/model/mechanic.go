@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+	"github.com/antonmedv/expr"
 	"github.com/asciiPL/asciiPL/src/util"
 )
 
@@ -26,7 +27,7 @@ type Action struct {
 	Expression []Expression `yaml:"expression" json:"expression"`
 }
 
-func (action Action) execute(source Character, target Character) {
+func (action Action) Execute(source Character, target Character) {
 	if action.Source.Physic.ID != source.Physic.ID || action.Source.Psychology.ID != source.Psychology.ID {
 		return
 	}
@@ -35,8 +36,62 @@ func (action Action) execute(source Character, target Character) {
 	}
 	expressions := action.Expression
 	for _, exp := range expressions {
-		fmt.Print(exp)
+		program, err := expr.Compile(exp.Command)
+		if err != nil {
+			fmt.Printf("error compiling expression: %v\n", err)
+			return
+		}
+		env := buildEnv(source, target)
+		output, err := expr.Run(program, env)
+		if err != nil {
+			fmt.Printf("error executing expression: %v\n", err)
+			return
+		}
+
+		fmt.Println(output)
 	}
+}
+
+func buildEnv(source Character, target Character) map[string]interface{} {
+	return map[string]interface{}{
+		"source": map[string]interface{}{
+			"physic":     transformRecord(source.Physic),
+			"psychology": transformRecord(source.Psychology),
+		},
+		"target": map[string]interface{}{
+			"physic":     transformRecord(target.Physic),
+			"psychology": transformRecord(target.Psychology),
+		},
+		"setMapFunc": setMapFunc,
+	}
+}
+
+func setMapFunc(map[string]interface{}) {
+
+}
+
+func transformRecord(record Record) map[string]interface{} {
+	result := make(map[string]interface{})
+	result["id"] = record.ID
+	result["name"] = record.Name
+
+	attrMap := make(map[string]interface{})
+	for _, attr := range record.Attribute {
+		attrName := attr.Name
+		if attrName == "" {
+			continue
+		}
+
+		attrValue := make(map[string]string)
+		for _, subAttr := range attr.Attribute {
+			attrValue[subAttr.Name] = subAttr.Value
+		}
+
+		attrMap[attrName] = attrValue
+	}
+
+	result["attribute"] = attrMap
+	return result
 }
 
 type Expression struct {
@@ -139,7 +194,7 @@ func GetRecordValue(record Record) Record {
 }
 
 func getAttributeValue(attribute []Attribute) []Attribute {
-	for i, _ := range attribute {
+	for i := range attribute {
 		attribute[i].Value = util.GetValueFromRange(attribute[i].Value)
 		if attribute[i].Attribute != nil || len(attribute[i].Attribute) != 0 {
 			attribute[i].Attribute = getAttributeValue(attribute[i].Attribute)
