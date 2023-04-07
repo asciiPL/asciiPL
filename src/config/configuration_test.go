@@ -13,4 +13,5 @@ func TestLoadCfg(t *testing.T) {
 	require.NotEqual(t, len(got.PhysicConfig), 0)
 	require.NotEqual(t, len(got.AreaConfig), 0)
 	require.NotEqual(t, len(got.PsychoConfig), 0)
+	require.NotEqual(t, len(got.ActionConfig), 0)
 }

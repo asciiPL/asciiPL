@@ -1,0 +1,81 @@
+{
+  "configs": [
+    {
+      "expression": [
+        {
+          "command": "tmp.happy = target.psychology.attribute.psychology_index.happy.toInt()",
+          "index": 5
+        },
+        {
+          "command": "target.psychology.attribute.psychology_index.happy = int(tmp.happy + (100-tmp.happy) * 0.1).toString()",
+          "index": 10
+        }
+      ],
+      "id": 1,
+      "name": "praise",
+      "source": {
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
+      },
+      "target": {
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
+      }
+    },
+    {
+      "expression": [
+        {
+          "command": "tmp.angry = target.psychology.attribute.psychology_index.angry.toInt()",
+          "index": 5
+        },
+        {
+          "command": "target.psychology.attribute.psychology_index.angry = int(tmp.angry * 1.1).toString()",
+          "index": 10
+        }
+      ],
+      "id": 2,
+      "name": "insults",
+      "source": {
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
+      },
+      "target": {
+        "physic": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        },
+        "psychology": {
+          "attribute": null,
+          "id": 1,
+          "name": ""
+        }
+      }
+    }
+  ],
+  "version": "0.0.1_init_action.yaml"
+}

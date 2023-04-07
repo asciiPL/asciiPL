@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/antonmedv/expr"
 	"github.com/asciiPL/asciiPL/src/screen"
 )
 

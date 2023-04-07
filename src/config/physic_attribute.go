@@ -1,5 +1,7 @@
 package config
 
+import "github.com/asciiPL/asciiPL/src/model"
+
 type PhysicMigration struct {
-	Physics []Record `yaml:"physics"`
+	Physics []model.Record `yaml:"physics"`
 }

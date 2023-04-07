@@ -17,12 +17,6 @@ var (
 	cwd = filepath.Join(filepath.Dir(b), "../..")
 )
 
-func ReadFile(filepath string) ([]byte, error) {
-	fullPath := path.Join(cwd, filepath)
-
-	return os.ReadFile(fullPath)
-}
-
 func DivideString(input string) float64 {
 	parts := strings.Split(input, "/")
 	numerator, _ := strconv.ParseFloat(parts[0], 64)
@@ -50,11 +44,4 @@ func ListFileConfig(folderPath string) []string {
 	sort.Strings(res)
 
 	return res
-}
-
-func WriteFile(filepath string, data []byte) error {
-
-	fullPath := path.Join(cwd, filepath)
-
-	return os.WriteFile(fullPath, data, 0644)
 }

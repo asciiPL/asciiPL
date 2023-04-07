@@ -12,32 +12,25 @@ type AreaConfig struct {
 }
 
 type PhysicConfig struct {
-	Configs []Record `json:"configs"`
-	Version string   `json:"version"`
+	Configs []model.Record `json:"configs"`
+	Version string         `json:"version"`
 }
 
 type PsychologyConfig struct {
-	Configs []Record `json:"configs"`
-	Version string   `json:"version"`
+	Configs []model.Record `json:"configs"`
+	Version string         `json:"version"`
+}
+
+type ActionConfig struct {
+	Configs []model.Action `json:"configs"`
+	Version string         `json:"version"`
 }
 
 type Configuration struct {
 	AreaConfig   map[int]model.Area
-	PhysicConfig map[int]Record
-	PsychoConfig map[int]Record
-}
-
-type Record struct {
-	Name      string      `yaml:"name" json:"name"`
-	ID        int         `yaml:"id" json:"id"`
-	Attribute []Attribute `yaml:"attribute" json:"attribute"`
-}
-
-type Attribute struct {
-	Name        string      `yaml:"name" json:"name,omitempty"`
-	Value       string      `yaml:"value" json:"value,omitempty"`
-	Description string      `yaml:"description" json:"description,omitempty"`
-	Attribute   []Attribute `yaml:"attribute" json:"attribute,omitempty"`
+	PhysicConfig map[int]model.Record
+	PsychoConfig map[int]model.Record
+	ActionConfig map[int]model.Action
 }
 
 func LoadCfg(isRoot bool) *Configuration {
@@ -60,23 +53,38 @@ func LoadCfg(isRoot bool) *Configuration {
 		log.Printf(err.Error())
 		return nil
 	}
+	actionConfig := ActionConfig{}
+	err = parseConfig(isRoot, "config/data", "action.json", &actionConfig)
+	if err != nil {
+		log.Printf(err.Error())
+		return nil
+	}
 	return &Configuration{
 		AreaConfig:   mappingArea(areaConfig),
 		PhysicConfig: mappingPhysic(physicConfig),
 		PsychoConfig: mappingPsycho(psychoConfig),
+		ActionConfig: mappingAction(actionConfig),
 	}
 }
 
-func mappingPsycho(config PsychologyConfig) (m map[int]Record) {
-	m = make(map[int]Record, 0)
+func mappingAction(config ActionConfig) map[int]model.Action {
+	m := make(map[int]model.Action, 0)
 	for _, config := range config.Configs {
 		m[config.ID] = config
 	}
 	return m
 }
 
-func mappingPhysic(config PhysicConfig) (m map[int]Record) {
-	m = make(map[int]Record, 0)
+func mappingPsycho(config PsychologyConfig) (m map[int]model.Record) {
+	m = make(map[int]model.Record, 0)
+	for _, config := range config.Configs {
+		m[config.ID] = config
+	}
+	return m
+}
+
+func mappingPhysic(config PhysicConfig) (m map[int]model.Record) {
+	m = make(map[int]model.Record, 0)
 	for _, config := range config.Configs {
 		m[config.ID] = config
 	}

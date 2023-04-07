@@ -15,31 +15,41 @@ var (
 	gridConfigFiles       = util.ListFileConfig("config/grid")
 	physicAttributeFiles  = util.ListFileConfig("config/character_attribute/physics")
 	psychologyConfigFiles = util.ListFileConfig("config/character_attribute/psychology")
+	actionConfigFiles     = util.ListFileConfig("config/action")
 )
 
-func LoadMigration() ([]AreaMigration, []PhysicMigration, []PsychologyMigration) {
+func LoadMigration() ([]AreaMigration, []PhysicMigration,
+	[]PsychologyMigration, []ActionMigration) {
 	physicAttributeMigrations := make([]PhysicMigration, len(physicAttributeFiles))
 	err := parseMigration("config/character_attribute/physics", physicAttributeFiles, append(make([]interface{}, 0), physicAttributeMigrations))
 	if err != nil {
 		log.Printf(err.Error())
-		return nil, nil, nil
+		return nil, nil, nil, nil
 	}
 
 	areaMigrations := make([]AreaMigration, len(gridConfigFiles))
 	err = parseMigration("config/grid", gridConfigFiles, append(make([]interface{}, 0), areaMigrations))
 	if err != nil {
 		log.Printf(err.Error())
-		return nil, nil, nil
+		return nil, nil, nil, nil
 	}
 
 	psychologyMigration := make([]PsychologyMigration, len(psychologyConfigFiles))
 	err = parseMigration("config/character_attribute/psychology", psychologyConfigFiles, append(make([]interface{}, 0), psychologyMigration))
 	if err != nil {
 		log.Printf(err.Error())
-		return nil, nil, nil
+		return nil, nil, nil, nil
 	}
 
-	return areaMigrations, physicAttributeMigrations, psychologyMigration
+	actionMigration := make([]ActionMigration, len(actionConfigFiles))
+	err = parseMigration("config/action", actionConfigFiles, append(make([]interface{}, 0), actionMigration))
+	if err != nil {
+		log.Printf(err.Error())
+		return nil, nil, nil, nil
+	}
+
+	return areaMigrations, physicAttributeMigrations,
+		psychologyMigration, actionMigration
 }
 
 func parseMigration(configPath string, configFiles []string, migrationCfgs []interface{}) error {
@@ -91,7 +101,8 @@ func storeConfig(configFiles string, migrationCfgs []interface{}, version string
 }
 
 func storeCfg() error {
-	areaMigrations, physicAttributeMigrations, psychologyMigration := LoadMigration()
+	areaMigrations, physicAttributeMigrations,
+		psychologyMigration, actionMigration := LoadMigration()
 	err := storeConfig("area.json", append(make([]interface{}, 0), buildAreaConfig(areaMigrations)), gridConfigFiles[len(gridConfigFiles)-1])
 	if err != nil {
 		return err
@@ -104,11 +115,25 @@ func storeCfg() error {
 	if err != nil {
 		return err
 	}
+	err = storeConfig("action.json", append(make([]interface{}, 0), buildActionConfig(actionMigration)), actionConfigFiles[len(actionConfigFiles)-1])
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func buildPsychologyConfig(migrations []PsychologyMigration) []Record {
-	id2Cfs := map[int]Record{}
+func buildActionConfig(migrations []ActionMigration) interface{} {
+	id2Cfs := map[int]model.Action{}
+	for _, cfg := range migrations {
+		for _, action := range cfg.Actions {
+			id2Cfs[action.ID] = action
+		}
+	}
+	return maps.Values(id2Cfs)
+}
+
+func buildPsychologyConfig(migrations []PsychologyMigration) []model.Record {
+	id2Cfs := map[int]model.Record{}
 	for _, cfg := range migrations {
 		for _, physic := range cfg.Psychology {
 			id2Cfs[physic.ID] = physic
@@ -127,8 +152,8 @@ func buildAreaConfig(migrations []AreaMigration) []model.Area {
 	return maps.Values(id2Cfs)
 }
 
-func buildPhysicConfig(migrations []PhysicMigration) []Record {
-	id2Cfs := map[int]Record{}
+func buildPhysicConfig(migrations []PhysicMigration) []model.Record {
+	id2Cfs := map[int]model.Record{}
 	for _, cfg := range migrations {
 		for _, physic := range cfg.Physics {
 			id2Cfs[physic.ID] = physic
