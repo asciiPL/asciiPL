@@ -12,8 +12,10 @@ actions:
       psychology:
         id: 1
     expression:
+      - index: 5
+        command: tmp.happy = target.psychology.attribute.psychology_index.happy.toInt()
       - index: 10
-        command: source.happy = int(source.happy + (100-source.happy) * 0.1)
+        command: target.psychology.attribute.psychology_index.happy = int(tmp.happy + (100-tmp.happy) * 0.1).toString()
   - id: 2
     name: insults
     source:
@@ -27,5 +29,7 @@ actions:
       psychology:
         id: 1
     expression:
+      - index: 5
+        command: tmp.angry = target.psychology.attribute.psychology_index.angry.toInt()
       - index: 10
-        command: source.angry = int(source.angry + (100-source.angry) * 0.1)
+        command: target.psychology.attribute.psychology_index.angry = int(tmp.angry + (100-tmp.angry) * 0.1).toString()

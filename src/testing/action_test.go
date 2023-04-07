@@ -4,6 +4,7 @@ import (
 	"github.com/asciiPL/asciiPL/src/config"
 	"github.com/stretchr/testify/require"
 	"log"
+	"reflect"
 	"testing"
 )
 
@@ -13,26 +14,20 @@ func TestPraiseAction(t *testing.T) {
 	char1 := createHumanCharacter(cfg)
 	char2 := createHumanCharacter(cfg)
 
+	char2.Psychology.Attribute[0].Attribute[0].Value = "50" // happy = 50
+
 	praiseAction := cfg.ActionConfig[1]
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	praiseAction.Execute(*char1, *char2)
-
-	//program, err := expr.Compile("expression[0].command")
-	//if err != nil {
-	//	fmt.Printf("error compiling expression: %v\n", err)
-	//	return
-	//}
-	//
-	//output, err := expr.Run(program, data)
-	//if err != nil {
-	//	fmt.Printf("error executing expression: %v\n", err)
-	//	return
-	//}
-	//
-	//fmt.Println(output)
+	err := praiseAction.Execute(char1, char2)
+	require.NoError(t, err)
 
 	require.NotNil(t, praiseAction)
 
 	require.NotNil(t, char1)
 	require.NotNil(t, char2)
+
+	require.True(t, reflect.DeepEqual(char1, char1))
+	require.Equal(t, char2.Psychology.Attribute[0].Attribute[0].Value, "55")
+	char2.Psychology.Attribute[0].Attribute[0].Value = "50" // happy = 50
+	require.True(t, reflect.DeepEqual(char2, char2))
 }

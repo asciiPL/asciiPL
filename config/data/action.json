@@ -3,7 +3,11 @@
     {
       "expression": [
         {
-          "command": "source.happy = int(source.happy + (100-source.happy) * 0.1)",
+          "command": "tmp.happy = target.psychology.attribute.psychology_index.happy.toInt()",
+          "index": 5
+        },
+        {
+          "command": "target.psychology.attribute.psychology_index.happy = int(tmp.happy + (100-tmp.happy) * 0.1).toString()",
           "index": 10
         }
       ],
@@ -37,7 +41,11 @@
     {
       "expression": [
         {
-          "command": "source.angry = int(source.angry + (100-source.angry) * 0.1)",
+          "command": "tmp.angry = target.psychology.attribute.psychology_index.angry.toInt()",
+          "index": 5
+        },
+        {
+          "command": "target.psychology.attribute.psychology_index.angry = int(tmp.angry * 1.1).toString()",
           "index": 10
         }
       ],

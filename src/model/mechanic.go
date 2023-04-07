@@ -1,9 +1,13 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"github.com/antonmedv/expr"
+	"github.com/antonmedv/expr/vm"
 	"github.com/asciiPL/asciiPL/src/util"
+	"strconv"
+	"strings"
 )
 
 type Record struct {
@@ -27,32 +31,61 @@ type Action struct {
 	Expression []Expression `yaml:"expression" json:"expression"`
 }
 
-func (action Action) Execute(source Character, target Character) {
+func (action Action) Execute(source *Character, target *Character) error {
 	if action.Source.Physic.ID != source.Physic.ID || action.Source.Psychology.ID != source.Psychology.ID {
-		return
+		return errors.New("config is not correct")
 	}
 	if action.Target.Physic.ID != target.Physic.ID || action.Target.Psychology.ID != target.Psychology.ID {
-		return
+		return errors.New("config is not correct")
 	}
 	expressions := action.Expression
+	data := buildData(*source, *target)
 	for _, exp := range expressions {
-		program, err := expr.Compile(exp.Command)
+
+		env := map[string]interface{}{
+			"PathSet":    strings.TrimSpace(strings.Split(exp.Command, "=")[0]),
+			"Calculate":  strings.TrimSpace(strings.Split(exp.Command, "=")[1]),
+			"Data":       data,
+			"SetMapFunc": setMapFunc,
+		}
+
+		code := `SetMapFunc(PathSet, Calculate, Data)`
+
+		program, err := expr.Compile(code, expr.Env(env))
 		if err != nil {
 			fmt.Printf("error compiling expression: %v\n", err)
-			return
+			return err
 		}
-		env := buildEnv(source, target)
+
 		output, err := expr.Run(program, env)
 		if err != nil {
 			fmt.Printf("error executing expression: %v\n", err)
-			return
+			return err
 		}
 
-		fmt.Println(output)
+		data, _ = convertToMap(output)
 	}
+	delete(data, "tmp")
+	source.Physic = reverseTransformRecord(data["source"].(map[string]interface{})["physic"].(map[string]interface{}))
+	source.Psychology = reverseTransformRecord(data["source"].(map[string]interface{})["psychology"].(map[string]interface{}))
+	target.Physic = reverseTransformRecord(data["target"].(map[string]interface{})["physic"].(map[string]interface{}))
+	target.Psychology = reverseTransformRecord(data["target"].(map[string]interface{})["psychology"].(map[string]interface{}))
+	return nil
 }
 
-func buildEnv(source Character, target Character) map[string]interface{} {
+func convertToMap(input interface{}) (map[string]interface{}, error) {
+	if input == nil {
+		return nil, errors.New("input value is nil")
+	}
+
+	if m, ok := input.(map[string]interface{}); ok {
+		return m, nil
+	}
+
+	return nil, errors.New("input value is not a map[string]interface{}")
+}
+
+func buildData(source Character, target Character) map[string]interface{} {
 	return map[string]interface{}{
 		"source": map[string]interface{}{
 			"physic":     transformRecord(source.Physic),
@@ -62,12 +95,67 @@ func buildEnv(source Character, target Character) map[string]interface{} {
 			"physic":     transformRecord(target.Physic),
 			"psychology": transformRecord(target.Psychology),
 		},
-		"setMapFunc": setMapFunc,
 	}
 }
 
-func setMapFunc(map[string]interface{}) {
+func setMapFunc(pathSet string, calculate string, data map[string]interface{}) map[string]interface{} {
+	env := data
+	typeConvert := ".toInt()"
+	if strings.Contains(calculate, ".toInt()") {
+		typeConvert = ".toInt()"
+		calculate = strings.ReplaceAll(calculate, ".toInt()", "")
+	}
+	if strings.Contains(calculate, ".toString()") {
+		typeConvert = ".toString()"
+		calculate = strings.ReplaceAll(calculate, ".toString()", "")
+	}
 
+	program, err := expr.Compile(calculate, expr.Env(env))
+	if err != nil {
+		panic(err)
+	}
+
+	// Reuse this vm instance between runs
+	v := vm.VM{}
+
+	out, err := v.Run(program, env)
+	if err != nil {
+		panic(err)
+	}
+
+	if typeConvert == ".toInt()" {
+		v, err := strconv.Atoi(fmt.Sprintf("%s", out))
+		if err != nil {
+			panic(err)
+		}
+		var i interface{} = v
+		SetMap(data, pathSet, i)
+		return data
+	}
+
+	if typeConvert == ".toString()" {
+		v := fmt.Sprint(out)
+		var i interface{} = v
+		SetMap(data, pathSet, i)
+		return data
+	}
+
+	SetMap(data, pathSet, out)
+	return data
+}
+
+func SetMap(m map[string]interface{}, mapPath string, value interface{}) {
+	// Split the mapPath into its parts
+	keys := strings.Split(mapPath, ".")
+	// Traverse the map based on the keys
+	for i := 0; i < len(keys)-1; i++ {
+		if m[keys[i]] == nil {
+			m[keys[i]] = make(map[string]interface{})
+		}
+		m = m[keys[i]].(map[string]interface{})
+	}
+	// Set the value at the final key
+	m[keys[len(keys)-1]] = value
 }
 
 func transformRecord(record Record) map[string]interface{} {
@@ -82,7 +170,7 @@ func transformRecord(record Record) map[string]interface{} {
 			continue
 		}
 
-		attrValue := make(map[string]string)
+		attrValue := make(map[string]interface{})
 		for _, subAttr := range attr.Attribute {
 			attrValue[subAttr.Name] = subAttr.Value
 		}
@@ -92,6 +180,30 @@ func transformRecord(record Record) map[string]interface{} {
 
 	result["attribute"] = attrMap
 	return result
+}
+
+func reverseTransformRecord(m map[string]interface{}) Record {
+	var record Record
+	record.ID = m["id"].(int)
+	record.Name = m["name"].(string)
+
+	attributes := make([]Attribute, 0)
+	for key, value := range m["attribute"].(map[string]interface{}) {
+		attr := Attribute{Name: key}
+		subAttrs := make([]Attribute, 0)
+		for subKey, subValue := range value.(map[string]interface{}) {
+			subAttr := Attribute{Name: subKey, Value: subValue.(string)}
+			subAttrs = append(subAttrs, subAttr)
+		}
+		if len(subAttrs) > 0 {
+			attr.Attribute = subAttrs
+		}
+		attributes = append(attributes, attr)
+	}
+	if len(attributes) > 0 {
+		record.Attribute = attributes
+	}
+	return record
 }
 
 type Expression struct {
